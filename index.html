@@ -5,20 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kunwar Arpit Singh — Security Engineer</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root{
-    --navy: #0a0f1c;
-    --navy-raised: #0f1626;
-    --navy-panel: #111b2e;
-    --line: #22304a;
-    --line-soft: #1a2439;
-    --text: #e7ecf5;
-    --text-dim: #97a3ba;
-    --text-faint: #5c6a84;
-    --gold: #c9a35a;
-    --gold-soft: rgba(201,163,90,0.12);
-    --steel: #6f93b8;
+    --space: #060814;
+    --space-raised: #0c1024;
+    --panel: #0e122a;
+    --line: #232a4d;
+    --line-soft: #191f3c;
+    --text: #e9ecfb;
+    --text-dim: #9aa1c4;
+    --text-faint: #5c6390;
+    --gold: #f0c674;
+    --violet: #a78bfa;
+    --cyan: #67e8f9;
+    --pink: #f7a8d8;
     --serif: 'Fraunces', serif;
     --sans: 'Inter', sans-serif;
     --mono: 'JetBrains Mono', monospace;
@@ -27,101 +28,137 @@
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior: smooth; }
   body{
-    background: var(--navy);
+    background: var(--space);
     color: var(--text);
     font-family: var(--sans);
     line-height: 1.65;
+    overflow-x: hidden;
+    position: relative;
   }
-  ::selection{ background: var(--gold-soft); color: var(--gold); }
+  ::selection{ background: rgba(167,139,250,0.3); color: #fff; }
   a{ color:inherit; text-decoration:none; }
+
+  /* ---- Space background layers ---- */
+  #stars-canvas{ position: fixed; inset:0; z-index:0; pointer-events:none; }
 
   body::before{
     content:'';
-    position: fixed; inset:0;
+    position: fixed; inset:0; z-index:0;
     background:
-      radial-gradient(1100px 500px at 15% -10%, rgba(201,163,90,0.06), transparent 60%),
-      radial-gradient(900px 500px at 100% 10%, rgba(111,147,184,0.06), transparent 60%);
-    pointer-events:none; z-index:0;
+      radial-gradient(700px 500px at 12% 8%, rgba(167,139,250,0.16), transparent 60%),
+      radial-gradient(800px 600px at 88% 28%, rgba(103,232,249,0.10), transparent 60%),
+      radial-gradient(700px 500px at 50% 95%, rgba(240,198,116,0.08), transparent 60%);
+    pointer-events:none;
+    animation: driftGlow 26s ease-in-out infinite alternate;
+  }
+  @keyframes driftGlow{
+    0%{ transform: translate(0,0) scale(1); }
+    100%{ transform: translate(-2%, 2%) scale(1.04); }
   }
 
-  .wrap{ max-width: 940px; margin:0 auto; padding: 0 28px; position:relative; z-index:1; }
+  .shooting-star{
+    position: fixed; top: 10%; left: -10%; z-index:1; pointer-events:none;
+    width: 3px; height:3px; border-radius:50%; background:#fff;
+    box-shadow: 0 0 6px 2px rgba(255,255,255,0.7);
+  }
+  .shooting-star::before{
+    content:''; position:absolute; top:50%; right:0; width:90px; height:1px;
+    background: linear-gradient(to left, rgba(255,255,255,0.9), transparent);
+    transform: translateY(-50%);
+  }
+  .shooting-star{ animation: shoot 7s linear infinite; }
+  .shooting-star.s2{ top: 32%; animation-delay: 3.2s; animation-duration: 9s; }
+  .shooting-star.s3{ top: 62%; animation-delay: 5.6s; animation-duration: 6s; }
+  @keyframes shoot{
+    0%{ transform: translate(0,0); opacity:0; }
+    3%{ opacity:1; }
+    18%{ transform: translate(130vw, 90px); opacity:0; }
+    100%{ transform: translate(130vw, 90px); opacity:0; }
+  }
+
+  .wrap{ max-width: 940px; margin:0 auto; padding: 0 28px; position:relative; z-index:2; }
 
   /* ---- Nav ---- */
   nav{
     position: sticky; top:0; z-index:50;
-    background: rgba(10,15,28,0.82);
+    background: rgba(6,8,20,0.78);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line-soft);
   }
   nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:18px 28px; }
   .brand{ font-family: var(--serif); font-weight:600; font-size:17px; letter-spacing:0.02em; color:#fff; }
-  .brand .dot{ color: var(--gold); }
-  .nav-links{ display:flex; gap:28px; }
+  .brand .dot{ color: var(--violet); }
+  .nav-links{ display:flex; gap:26px; }
   .nav-links a{
-    font-family: var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase;
-    color: var(--text-dim); transition: color .2s ease;
+    font-family: var(--mono); font-size:11px; letter-spacing:0.06em;
+    color: var(--text-dim); transition: all .2s ease; position:relative;
   }
-  .nav-links a:hover{ color: var(--gold); }
+  .nav-links a:hover{ color: var(--cyan); transform: translateY(-1px); }
 
   /* ---- Hero ---- */
   header.hero{ padding: 84px 0 60px; }
-  .hero-grid{
-    display:grid; grid-template-columns: 1fr auto; gap: 56px; align-items:center;
-  }
+  .hero-grid{ display:grid; grid-template-columns: 1fr auto; gap: 56px; align-items:center; }
   .eyebrow{
-    font-family: var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-    color: var(--gold); margin-bottom:18px; display:flex; align-items:center; gap:10px;
+    font-family: var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color: var(--cyan); margin-bottom:18px; display:flex; align-items:center; gap:10px;
   }
-  .eyebrow::before{ content:''; width:22px; height:1px; background: var(--gold); display:inline-block; }
+  .eyebrow::before{ content:'✦'; color: var(--gold); }
 
   .hero-name{
-    font-family: var(--serif); font-weight:600; font-size: clamp(36px,5.2vw,58px);
-    color:#fff; line-height:1.05; letter-spacing:-0.01em;
+    font-family: var(--serif); font-weight:600; font-size: clamp(34px,5vw,54px);
+    color:#fff; line-height:1.08; letter-spacing:-0.01em;
   }
-  .hero-role{
-    font-family: var(--sans); font-size:17px; color: var(--steel); margin-top:14px; font-weight:500;
+  .hero-name .wave{ display:inline-block; animation: wave 2.4s ease-in-out infinite; transform-origin: 70% 70%; }
+  @keyframes wave{
+    0%,100%{ transform: rotate(0deg); } 15%{ transform: rotate(14deg); } 30%{ transform: rotate(-8deg); } 45%{ transform: rotate(14deg); } 60%{ transform: rotate(0deg); }
   }
-  .hero-desc{
-    color: var(--text-dim); font-size:15px; max-width:480px; margin-top:18px;
-  }
+  .hero-role{ font-family: var(--sans); font-size:16.5px; color: var(--violet); margin-top:14px; font-weight:600; }
+  .hero-desc{ color: var(--text-dim); font-size:15px; max-width:490px; margin-top:16px; }
 
   .hero-tags{ display:flex; flex-wrap:wrap; gap:9px; margin-top:24px; }
   .tag{
-    font-family: var(--mono); font-size:11px; letter-spacing:0.03em; color: var(--steel);
-    border:1px solid var(--line); padding:6px 12px; border-radius:3px; background: var(--navy-raised);
+    font-family: var(--mono); font-size:11px; letter-spacing:0.02em; color: var(--cyan);
+    border:1px solid var(--line); padding:7px 13px; border-radius:20px; background: var(--space-raised);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, border-color .25s ease;
   }
+  .tag:hover{ transform: translateY(-4px) scale(1.07); border-color: var(--cyan); box-shadow: 0 8px 20px -8px rgba(103,232,249,0.5); }
 
   .icon-row{ display:flex; gap:12px; margin-top:30px; }
   .icon-btn{
-    width:42px; height:42px; display:flex; align-items:center; justify-content:center;
-    border:1px solid var(--line); border-radius:6px; background: var(--navy-raised);
-    transition: all .2s ease;
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line); border-radius:50%; background: var(--space-raised);
+    transition: all .28s cubic-bezier(.34,1.56,.64,1);
   }
   .icon-btn svg{ width:18px; height:18px; stroke: var(--text-dim); transition: stroke .2s ease; }
-  .icon-btn:hover{ border-color: var(--gold); background: var(--gold-soft); transform: translateY(-2px); }
-  .icon-btn:hover svg{ stroke: var(--gold); }
+  .icon-btn:hover{ border-color: var(--violet); background: rgba(167,139,250,0.14); transform: translateY(-5px) scale(1.12) rotate(-6deg); box-shadow: 0 10px 24px -8px rgba(167,139,250,0.6); }
+  .icon-btn:hover svg{ stroke: var(--violet); }
 
-  /* ID Badge */
+  /* Floating badge */
   .badge{
-    width: 258px;
-    background: var(--navy-panel);
+    width: 260px;
+    background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 18px;
     padding: 22px 22px 20px;
     position: relative;
-    box-shadow: 0 30px 70px -25px rgba(0,0,0,0.7);
+    box-shadow: 0 30px 70px -25px rgba(0,0,0,0.8), 0 0 0 1px rgba(167,139,250,0.05);
+    animation: floatCard 5s ease-in-out infinite;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .badge:hover{ transform: translateY(-6px) rotate(-1deg); box-shadow: 0 40px 80px -20px rgba(167,139,250,0.35); }
+  @keyframes floatCard{
+    0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-10px); }
   }
   .badge::after{
-    content:'';
-    position:absolute; top:-9px; left:50%; transform:translateX(-50%);
-    width:56px; height:16px; border-radius:0 0 8px 8px;
-    background: var(--line); 
+    content:'✦'; position:absolute; top:-14px; right:16px; color: var(--gold); font-size:18px;
+    animation: twinkleStar 2.6s ease-in-out infinite;
   }
+  @keyframes twinkleStar{ 0%,100%{ opacity:0.3; transform: scale(0.8);} 50%{ opacity:1; transform: scale(1.15);} }
   .badge-photo{
-    width:100%; aspect-ratio: 1/1; border-radius:10px; overflow:hidden;
-    border: 1px solid var(--line); margin-bottom:16px;
+    width:100%; aspect-ratio: 1/1; border-radius:12px; overflow:hidden;
+    border: 1px solid var(--line); margin-bottom:16px; position:relative;
   }
-  .badge-photo img{ width:100%; height:100%; object-fit:cover; display:block; filter: grayscale(15%) contrast(1.03); }
+  .badge-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
   .badge-name{ font-family: var(--serif); font-weight:600; font-size:16.5px; color:#fff; line-height:1.25; }
   .badge-role{ font-family: var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color: var(--gold); margin-top:6px; }
   .badge-div{ height:1px; background: var(--line); margin: 14px 0; }
@@ -129,71 +166,84 @@
   .badge-row b{ color: var(--text-dim); font-weight:500; }
   .badge-status{
     margin-top:14px; display:flex; align-items:center; gap:7px;
-    font-family: var(--mono); font-size:10px; letter-spacing:0.05em; color: #7fd9a8;
+    font-family: var(--mono); font-size:10px; letter-spacing:0.04em; color: #7fe0b8;
   }
-  .badge-status .pulse{ width:6px; height:6px; border-radius:50%; background:#7fd9a8; box-shadow:0 0 0 0 rgba(127,217,168,0.6); animation: pulse 2s infinite; }
+  .badge-status .pulse{ width:6px; height:6px; border-radius:50%; background:#7fe0b8; box-shadow:0 0 0 0 rgba(127,224,184,0.6); animation: pulse 2s infinite; }
   @keyframes pulse{
-    0%{ box-shadow:0 0 0 0 rgba(127,217,168,0.5); }
-    70%{ box-shadow:0 0 0 8px rgba(127,217,168,0); }
-    100%{ box-shadow:0 0 0 0 rgba(127,217,168,0); }
+    0%{ box-shadow:0 0 0 0 rgba(127,224,184,0.5); } 70%{ box-shadow:0 0 0 8px rgba(127,224,184,0); } 100%{ box-shadow:0 0 0 0 rgba(127,224,184,0); }
   }
 
   /* ---- Sections ---- */
   section{ padding: 60px 0; border-top: 1px solid var(--line-soft); }
-  .sec-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:32px; }
-  .sec-num{ font-family: var(--mono); font-size:12px; color: var(--gold); }
-  .sec-title{ font-family: var(--serif); font-size:26px; font-weight:600; color:#fff; }
+  .sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:32px; }
+  .sec-emoji{ font-size:20px; }
+  .sec-title{ font-family: var(--serif); font-size:25px; font-weight:600; color:#fff; }
   .sec-rule{ flex:1; height:1px; background: var(--line-soft); }
 
   .about-text{ color: var(--text-dim); font-size:15.5px; max-width:640px; }
   .about-text b{ color: var(--text); font-weight:600; }
+  .about-text .em{ color: var(--gold); }
 
   /* Education */
   .edu-item{
-    display:grid; grid-template-columns: 100px 1fr; gap:20px; padding: 18px 0;
-    border-bottom: 1px solid var(--line-soft);
+    display:grid; grid-template-columns: 100px 1fr; gap:20px; padding: 16px 14px;
+    border-radius: 10px; margin-bottom: 4px;
+    transition: background .2s ease, transform .2s ease;
   }
-  .edu-item:last-child{ border-bottom:none; }
+  .edu-item:hover{ background: rgba(167,139,250,0.06); transform: translateX(4px); }
   .edu-year{ font-family: var(--mono); font-size:12px; color: var(--gold); padding-top:2px; }
-  .edu-school{ font-weight:600; color:#fff; font-size:15.5px; font-family: var(--sans); }
+  .edu-school{ font-weight:600; color:#fff; font-size:15.5px; }
   .edu-degree{ color: var(--text-dim); font-size:13.5px; margin-top:4px; }
   .edu-loc{ color: var(--text-faint); font-size:12px; margin-top:4px; }
 
   /* Skills */
-  .skill-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:1px; background: var(--line-soft); border:1px solid var(--line-soft); border-radius:8px; overflow:hidden; }
-  .skill-card{ background: var(--navy-panel); padding:20px; }
-  .skill-card .k{ font-family: var(--mono); color: var(--gold); font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; }
+  .skill-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+  .skill-card{
+    background: var(--panel); border: 1px solid var(--line-soft); border-radius:12px; padding:20px;
+    transition: transform .28s cubic-bezier(.34,1.56,.64,1), border-color .25s ease, box-shadow .25s ease;
+  }
+  .skill-card:hover{ transform: translateY(-6px); border-color: var(--violet); box-shadow: 0 16px 36px -16px rgba(167,139,250,0.4); }
+  .skill-card .k{ font-family: var(--mono); color: var(--cyan); font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; }
   .chip-row{ display:flex; flex-wrap:wrap; gap:7px; }
-  .chip{ font-family: var(--sans); font-size:12.5px; color: var(--text); background: var(--navy-raised); border:1px solid var(--line); padding:5px 10px; border-radius:4px; }
+  .chip{
+    font-family: var(--sans); font-size:12.5px; color: var(--text); background: var(--space-raised);
+    border:1px solid var(--line); padding:5px 10px; border-radius:6px;
+    transition: transform .2s cubic-bezier(.34,1.56,.64,1), border-color .2s ease, color .2s ease;
+  }
+  .chip:hover{ transform: scale(1.08) translateY(-2px); border-color: var(--gold); color: var(--gold); }
 
   /* Projects */
   .proj{
-    border:1px solid var(--line-soft); border-radius:10px; padding:26px; margin-bottom:16px;
-    background: var(--navy-panel); transition: border-color .2s ease;
+    border:1px solid var(--line-soft); border-radius:14px; padding:26px; margin-bottom:16px;
+    background: var(--panel); transition: transform .28s cubic-bezier(.34,1.56,.64,1), border-color .25s ease, box-shadow .3s ease;
   }
-  .proj:hover{ border-color: var(--line); }
+  .proj:hover{ transform: translateY(-5px); border-color: var(--cyan); box-shadow: 0 20px 46px -20px rgba(103,232,249,0.35); }
   .proj-head{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
   .proj-title{ font-weight:700; color:#fff; font-size:17px; font-family: var(--serif); }
-  .proj-stack{ font-family: var(--mono); font-size:11px; color: var(--steel); }
+  .proj-stack{ font-family: var(--mono); font-size:11px; color: var(--violet); }
   .proj ul{ list-style:none; margin-top:12px; }
   .proj li{ color: var(--text-dim); font-size:14px; margin-bottom:8px; padding-left:18px; position:relative; }
-  .proj li::before{ content:'—'; position:absolute; left:0; color: var(--gold); }
+  .proj li::before{ content:'☄'; position:absolute; left:0; top:-1px; color: var(--gold); font-size:11px; }
 
   /* Certifications */
   .cert-item{
-    display:flex; justify-content:space-between; align-items:center; padding:16px 0;
-    border-bottom: 1px solid var(--line-soft); flex-wrap:wrap; gap:6px;
+    display:flex; justify-content:space-between; align-items:center; padding:15px 14px;
+    border-radius:10px; flex-wrap:wrap; gap:6px; transition: background .2s ease, transform .2s ease;
   }
-  .cert-item:last-child{ border-bottom:none; }
+  .cert-item:hover{ background: rgba(103,232,249,0.06); transform: translateX(4px); }
   .cert-name{ color: var(--text); font-size:15px; font-weight:600; }
   .cert-sub{ color: var(--text-faint); font-size:12.5px; margin-top:3px; }
   .cert-org{ font-family: var(--mono); font-size:11px; color: var(--gold); letter-spacing:0.03em; text-transform:uppercase; }
 
   /* Additional */
   .add-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
-  .add-card{ border:1px solid var(--line-soft); border-radius:10px; padding:20px; background: var(--navy-panel); }
+  .add-card{
+    border:1px solid var(--line-soft); border-radius:14px; padding:20px; background: var(--panel);
+    transition: transform .28s cubic-bezier(.34,1.56,.64,1), border-color .25s ease;
+  }
+  .add-card:hover{ transform: translateY(-6px) rotate(-0.5deg); border-color: var(--gold); }
   .add-card .status{ display:inline-block; font-family: var(--mono); font-size:10px; color: var(--gold); border:1px solid var(--line); padding:3px 9px; border-radius:20px; margin-bottom:10px; letter-spacing:0.04em; }
-  .add-card h3{ font-size:15px; color:#fff; margin-bottom:6px; font-family: var(--sans); font-weight:600; }
+  .add-card h3{ font-size:15px; color:#fff; margin-bottom:6px; font-weight:600; }
   .add-card p{ font-size:13px; color: var(--text-dim); }
 
   /* Footer / contact */
@@ -211,23 +261,28 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    .badge-status .pulse{ animation:none; }
+    .badge-status .pulse, .badge, .badge::after, body::before, .shooting-star{ animation:none !important; }
     html{ scroll-behavior:auto; }
   }
 </style>
 </head>
 <body>
 
+<canvas id="stars-canvas"></canvas>
+<div class="shooting-star s1"></div>
+<div class="shooting-star s2"></div>
+<div class="shooting-star s3"></div>
+
 <nav>
   <div class="wrap">
-    <div class="brand">Kunwar Arpit Singh<span class="dot">.</span></div>
+    <div class="brand">Arpit<span class="dot">.</span>dev</div>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#education">Education</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#contact">Contact</a>
+      <a href="#certifications">Certs</a>
+      <a href="#contact">Say Hi</a>
     </div>
   </div>
 </nav>
@@ -236,20 +291,20 @@
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="eyebrow">Security Engineer · B.Tech CSE</div>
-        <h1 class="hero-name">Kunwar Arpit<br>Singh</h1>
-        <p class="hero-role">Network Security &amp; Software Developer </p>
+        <div class="eyebrow">Somewhere in the network, probably breaking something</div>
+        <h1 class="hero-name">Hey, I'm Arpit <span class="wave">👋</span></h1>
+        <p class="hero-role">Security Engineer in the making · Network Security &amp; Pen Testing</p>
         <p class="hero-desc">
-          I study how networks fail — analyzing traffic at the protocol level, probing
-          applications for weaknesses, and building tools that make that work faster.
-          Currently completing a B.Tech in Computer Science in Dehradun, India.
+          I'm a CS student who got a little too curious about how networks break — so now I spend my time
+          poking at packets, hunting bugs, and building tools that make that easier. Currently finishing
+          my B.Tech in Dehradun, India. 🚀
         </p>
 
         <div class="hero-tags">
-          <span class="tag">PENETRATION TESTING</span>
-          <span class="tag">PACKET ANALYSIS</span>
-          <span class="tag">PYTHON</span>
-          <span class="tag">BUG BOUNTY</span>
+          <span class="tag">🛡️ Penetration Testing</span>
+          <span class="tag">📡 Packet Analysis</span>
+          <span class="tag">🐍 Python</span>
+          <span class="tag">🐛 Bug Bounty</span>
         </div>
 
         <div class="icon-row">
@@ -278,7 +333,7 @@
         <div class="badge-row"><span>Location</span><b>Dehradun, IN</b></div>
         <div class="badge-row"><span>Focus</span><b>Network Security</b></div>
         <div class="badge-row"><span>ID</span><b>KAS-2027</b></div>
-        <div class="badge-status"><span class="pulse"></span> AVAILABLE FOR OPPORTUNITIES</div>
+        <div class="badge-status"><span class="pulse"></span> OPEN TO OPPORTUNITIES</div>
       </div>
     </div>
   </div>
@@ -286,20 +341,20 @@
 
 <section id="about">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">About</span><span class="sec-rule"></span></div>
+    <div class="sec-head"><span class="sec-emoji">🧑‍💻</span><span class="sec-title">A bit about me</span><span class="sec-rule"></span></div>
     <p class="about-text">
-      I'm a Computer Science undergraduate at <b>Uttaranchal University</b>, working toward a career in
-      <b>security engineering</b>. My interest sits at the protocol level — how packets move, how they break,
-      and how attackers exploit the gap between intended and actual behavior. I build Python tools for
-      traffic analysis, actively participate in <b>bug bounty</b> programs and <b>CTF</b> competitions, and
-      hold certifications in networking and generative AI fundamentals.
+      I'm a Computer Science student at <b>Uttaranchal University</b>, and honestly, most of my free time
+      goes into figuring out <span class="em">how things break</span>. Packets, protocols, web apps — if it
+      has a weak spot, I want to find it before someone with worse intentions does. I write Python tools
+      for traffic analysis, chase bugs on <b>Bugcrowd</b>, and jump into <b>CTFs</b> whenever I can. Still
+      learning every day — that's kind of the fun part. ✨
     </p>
   </div>
 </section>
 
 <section id="education">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">Education</span><span class="sec-rule"></span></div>
+    <div class="sec-head"><span class="sec-emoji">🎓</span><span class="sec-title">Education</span><span class="sec-rule"></span></div>
 
     <div class="edu-item">
       <div class="edu-year">2023–2027</div>
@@ -332,7 +387,7 @@
 
 <section id="skills">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Skills</span><span class="sec-rule"></span></div>
+    <div class="sec-head"><span class="sec-emoji">🛠️</span><span class="sec-title">What I work with</span><span class="sec-rule"></span></div>
     <div class="skill-grid">
       <div class="skill-card">
         <div class="k">Languages</div>
@@ -376,7 +431,7 @@
 
 <section id="projects">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Projects</span><span class="sec-rule"></span></div>
+    <div class="sec-head"><span class="sec-emoji">🚀</span><span class="sec-title">Things I've built</span><span class="sec-rule"></span></div>
 
     <div class="proj">
       <div class="proj-head">
@@ -384,11 +439,11 @@
         <div class="proj-stack">PYTHON · SCAPY · TCP/IP · UDP · PCAP</div>
       </div>
       <ul>
-        <li>Python-based packet capture and analysis tool built on the Scapy library.</li>
-        <li>Captures and analyzes IP, TCP, UDP, ICMP, and DNS packets.</li>
-        <li>Protocol filtering across TCP, UDP, ICMP, DNS, HTTP, and HTTPS.</li>
-        <li>Saves captures in PCAP format for downstream analysis.</li>
-        <li>Displays source/destination IPs, ports, and payloads in real time.</li>
+        <li>A Python tool built on Scapy that captures and analyzes network traffic.</li>
+        <li>Reads and breaks down IP, TCP, UDP, ICMP, and DNS packets.</li>
+        <li>Lets you filter by protocol — TCP, UDP, ICMP, DNS, HTTP, HTTPS.</li>
+        <li>Saves everything in PCAP format so you can dig deeper later.</li>
+        <li>Shows source/destination IPs, ports, and payloads live as they come in.</li>
       </ul>
     </div>
 
@@ -398,8 +453,8 @@
         <div class="proj-stack">PYTHON</div>
       </div>
       <ul>
-        <li>Active contributor to an ongoing collaborative development workspace.</li>
-        <li>Regular practice with version control and collaborative coding.</li>
+        <li>An ongoing collaborative project I keep contributing to.</li>
+        <li>Good excuse to stay sharp with Git and team-based coding.</li>
       </ul>
     </div>
   </div>
@@ -407,7 +462,7 @@
 
 <section id="certifications">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Certifications</span><span class="sec-rule"></span></div>
+    <div class="sec-head"><span class="sec-emoji">📜</span><span class="sec-title">Certifications</span><span class="sec-rule"></span></div>
 
     <div class="cert-item">
       <div>
@@ -435,22 +490,22 @@
 
 <section id="additional">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><span class="sec-title">Active Now</span><span class="sec-rule"></span></div>
+    <div class="sec-head"><span class="sec-emoji">✨</span><span class="sec-title">What I'm up to lately</span><span class="sec-rule"></span></div>
     <div class="add-grid">
       <div class="add-card">
-        <span class="status">2025 – PRESENT</span>
-        <h3>Bug Bounty Participant</h3>
-        <p>Active researcher on Bugcrowd VDP programs.</p>
+        <span class="status">2025 – NOW</span>
+        <h3>🐛 Bug Bounty Hunting</h3>
+        <p>Actively hunting on Bugcrowd VDP programs.</p>
       </div>
       <div class="add-card">
-        <span class="status">2025 – PRESENT</span>
-        <h3>CTF Enthusiast</h3>
-        <p>Regular participant in Capture The Flag competitions.</p>
+        <span class="status">2025 – NOW</span>
+        <h3>🏁 CTF Player</h3>
+        <p>Jumping into Capture The Flag competitions whenever I get the chance.</p>
       </div>
       <div class="add-card">
-        <span class="status">ONGOING</span>
-        <h3>Self-Learning</h3>
-        <p>Continuously expanding knowledge in cybersecurity and network security.</p>
+        <span class="status">ALWAYS</span>
+        <h3>📚 Learning Something New</h3>
+        <p>Constantly leveling up my cybersecurity and networking knowledge.</p>
       </div>
     </div>
   </div>
@@ -458,8 +513,8 @@
 
 <footer id="contact">
   <div class="wrap">
-    <div class="cta-title">Let's work together</div>
-    <p class="cta-sub">Open to internships and entry-level opportunities in security engineering.</p>
+    <div class="cta-title">Let's talk 🚀</div>
+    <p class="cta-sub">Open to internships and entry-level security roles — feel free to reach out, I don't bite.</p>
     <div class="contact-icons">
       <a class="icon-btn" href="https://www.linkedin.com/in/kunwararpitsingh/" target="_blank" rel="noopener" aria-label="LinkedIn">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -474,9 +529,56 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 3a2 2 0 0 1-.4 2.1L8 10.3a16 16 0 0 0 6 6l1.5-1.4a2 2 0 0 1 2.1-.4c1 .4 2 .6 3 .7a2 2 0 0 1 1.7 2z"/></svg>
       </a>
     </div>
-    <div class="copyline">DEHRADUN, INDIA · KUNWAR ARPIT SINGH © 2026</div>
+    <div class="copyline">MADE WITH ☕ IN DEHRADUN, INDIA · KUNWAR ARPIT SINGH © 2026</div>
   </div>
 </footer>
+
+<script>
+  // Twinkling starfield
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = document.body.scrollHeight;
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.floor((canvas.width * canvas.height) / 9000);
+    for(let i=0;i<count;i++){
+      stars.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*1.3 + 0.3,
+        baseAlpha: Math.random()*0.5 + 0.3,
+        speed: Math.random()*0.02 + 0.005,
+        phase: Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  let t = 0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(const s of stars){
+      const alpha = s.baseAlpha + Math.sin(t*s.speed*10 + s.phase)*0.3;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${Math.max(0,Math.min(1,alpha))})`;
+      ctx.fill();
+    }
+    t += 1;
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  initStars();
+  draw();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  window.addEventListener('load', () => { resize(); initStars(); });
+</script>
 
 </body>
 </html>
